@@ -15,22 +15,34 @@ pragma solidity >=0.6.0 <0.7.0;
 contract SupplyChain {
 
   /* [X] set owner */
-  address indexed owner;
+  address indexed public owner;
 
   /* [X]Add a variable called skuCount to track the most recent sku # */
-  address indexed skuCount;
+  uint public skuCount;
 
-  /* Add a line that creates a public mapping that maps the SKU (a number) to an Item.
+  /* [X] Add a line that creates a public mapping that maps the SKU (a number) to an Item.
      Call this mappings items
   */
+  mapping (uint => Item) public items;
 
-  /* Add a line that creates an enum called State. This should have 4 states
-    ForSale
-    Sold
-    Shipped
-    Received
+  /* [X] Add a line that creates an enum called State. This should have 4 states
+    [X] ForSale
+    [X] Sold
+    [X] Shipped
+    [X] Received
     (declaring them in this order is important for testing)
   */
+
+  //This merely initializes it
+  enum State {
+    ForSale,
+    Sold,
+    Shipped,
+    Received
+  }
+
+  //Create an instance of the State enum
+  State state;
 
   /* Create a struct named Item.
     Here, add a name, sku, price, state, seller, and buyer
