@@ -10,6 +10,7 @@
     ASSIGNMENT: Supply Chain Exercise
 */
 
+//Set solidity compiler version
 pragma solidity >=0.6.0 <0.7.0;
 
 contract SupplyChain {
@@ -23,10 +24,9 @@ contract SupplyChain {
   /* [X] Add a line that creates a public mapping that maps the SKU (a number) to an Item.
      Call this mappings items
   */
-/*------------------------------------------------------------------------------------------------------------------------------------------*/
-
   //Access an item through their sku number
   mapping (uint => Item) public items;
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* [X] Add a line that creates an ENUM called State. This should have 4 states
     [X] ForSale
@@ -35,10 +35,9 @@ contract SupplyChain {
     [X] Received
     (declaring them in this order is important for testing)
   */
-/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   //This merely initializes it
-  //This enum lists the potential state of a product
+  // [X] This enum lists the potential state of a product
   enum State {
     ForSale,
     Sold,
@@ -79,21 +78,25 @@ contract SupplyChain {
 
 /* [X] Create a modifer that checks if the msg.sender is the owner of the contract */
 //Provided the function satisfies the conditions, modifier can MODIFY the behavior of the function
+  // [X]
   modifier isOwner() {
     require(msg.sender == owner);
     _;
   }
 
+  // [X] 
   modifier verifyCaller (address _address) { 
     require (msg.sender == _address); 
     _;
   }
 
+  // [X]
   modifier paidEnough(uint _price) { 
     require(msg.value >= _price); 
     _;
   }
 
+  // [X]
   modifier checkValue(uint _sku) {
     //refund them after pay for item (why it is before, _ checks for logic before func)
     _;
@@ -113,24 +116,26 @@ contract SupplyChain {
    PS: Uncomment the modifier but keep the name for testing purposes!
    */
   
-  
+  // [X]
   modifier forSale(uint sku) {
-    //(!!!)
     require(items[sku].state == State.ForSale);
     require(items[sku].seller != address(0));
     _;
   }
 
+  // [X] 
   modifier sold(uint sku) {
     require(items[sku].state == State.Sold);
     _;
   }
 
+  // [X] 
   modifier shipped(uint sku) {
     require(items[sku].state == State.Shipped);
     _;
   }
 
+  // [X]
   modifier received(uint sku) {
     require(items[sku].state == State.Received);
     _;
@@ -202,7 +207,7 @@ contract SupplyChain {
 /*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* We have these functions completed so we can run tests, just ignore it :) */
-  //Uncomment to run tests successfully
+  // [X] Uncomment to run tests successfully
   function fetchItem(uint _sku) public view returns (string memory name, uint sku, uint price, uint state, address seller, address buyer) {
     name = items[_sku].name;
     sku = items[_sku].sku;
