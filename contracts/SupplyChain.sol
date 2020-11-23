@@ -154,13 +154,23 @@ contract SupplyChain {
 
   /* Add a keyword so the function can be paid. This function should transfer money
     to the seller, set the buyer as the person who called this transaction, and set the state
-    to Sold. Be careful, this function should use 3 modifiers to check if the item is for sale,
-    if the buyer paid enough, and check the value after the function is called to make sure the buyer is
-    refunded any excess ether sent. Remember to call the event associated with this function!*/
+    to Sold. Be careful, this function should use 3 MODIFIERS to check if:
+      - the item is for sale,
+      - if the buyer paid enough
+      - check the value after the function is called to make sure the buyer is refunded any excess ether sent. 
+    Remember to call the event associated with this function!*/
 
-  function buyItem(uint sku)
-    public
-  {}
+  function buyItem(uint sku) public payable 
+  forSale(sku) paidEnough(items[sku].price) checkValue(sku) {
+    //Wire money to seller, initialize buyer, change state of item to SOLD
+    items[sku].seller.transfer(items[sku].price);
+    items[sku].buyer = msg.sender;
+    items[sku].state = State.Sold;
+
+    //EMIT: State Change that item was successfully sold
+    emit LogSold(sku);
+  }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* Add 2 modifiers to check if the item is sold already, and that the person calling this function
   is the seller. Change the state of the item to shipped. Remember to call the event associated with this function!*/
