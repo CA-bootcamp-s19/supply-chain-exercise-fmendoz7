@@ -4,14 +4,21 @@
     https://solidity.readthedocs.io/en/v0.6.12/060-breaking-changes.html
 */
 
+/*
+    PROGRAMMER: Francis Mendoza
+    EMAIL: fmendoz7@asu.edu
+    ASSIGNMENT: Supply Chain Exercise
+*/
+
 pragma solidity >=0.6.0 <0.7.0;
 
 contract SupplyChain {
 
-  /* set owner */
-  address owner;
+  /* [X] set owner */
+  address indexed owner;
 
-  /* Add a variable called skuCount to track the most recent sku # */
+  /* [X]Add a variable called skuCount to track the most recent sku # */
+  address indexed skuCount;
 
   /* Add a line that creates a public mapping that maps the SKU (a number) to an Item.
      Call this mappings items
