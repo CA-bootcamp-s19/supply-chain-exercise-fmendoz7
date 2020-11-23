@@ -152,12 +152,12 @@ contract SupplyChain {
     return true;
   }
 
-  /* Add a keyword so the function can be paid. This function should transfer money
+  /* [X] Add a keyword so the function can be paid. This function should transfer money
     to the seller, set the buyer as the person who called this transaction, and set the state
     to Sold. Be careful, this function should use 3 MODIFIERS to check if:
-      - the item is for sale,
-      - if the buyer paid enough
-      - check the value after the function is called to make sure the buyer is refunded any excess ether sent. 
+      - [X] The item is for sale,
+      - [X] If the buyer paid enough
+      - [X] Check the value after the function is called to make sure the buyer is refunded any excess ether sent. 
     Remember to call the event associated with this function!*/
 
   function buyItem(uint sku) public payable 
@@ -172,11 +172,20 @@ contract SupplyChain {
   }
 /*------------------------------------------------------------------------------------------------------------------------------------------*/
 
-  /* Add 2 modifiers to check if the item is sold already, and that the person calling this function
-  is the seller. Change the state of the item to shipped. Remember to call the event associated with this function!*/
+  /* [X] Add 2 modifiers to check if the item is:
+    - [X] Sold already
+    - [X] The person calling this function is the seller. 
+  Change the state of the item to shipped. 
+  Remember to call the event associated with this function!*/
   function shipItem(uint sku)
-    public
-  {}
+    public sold(sku) verifyCaller(sku) {
+      //Had explicit require statement, for another peer can make this call and possibly waste gas (public)
+      require(msg.sender == items[sku].seller);
+      items[sku].state = State.Shipped;
+
+      //EMIT: State changed for item to be shipped
+      emit LogShipped(sku);
+    }
 
   /* Add 2 modifiers to check if the item is shipped already, and that the person calling this function
   is the buyer. Change the state of the item to received. Remember to call the event associated with this function!*/
