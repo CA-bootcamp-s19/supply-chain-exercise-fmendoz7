@@ -178,23 +178,31 @@ contract SupplyChain {
   Change the state of the item to shipped. 
   Remember to call the event associated with this function!*/
   function shipItem(uint sku)
-    public sold(sku) verifyCaller(sku) {
-      //Had explicit require statement, for another peer can make this call and possibly waste gas (public)
-      require(msg.sender == items[sku].seller);
+    public sold(sku) verifyCaller(items[sku].seller) {
       items[sku].state = State.Shipped;
 
       //EMIT: State changed for item to be shipped
       emit LogShipped(sku);
     }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
-  /* Add 2 modifiers to check if the item is shipped already, and that the person calling this function
-  is the buyer. Change the state of the item to received. Remember to call the event associated with this function!*/
+  /* [X] Add 2 modifiers to check if the item is:
+    - [X] Shipped already
+    - [X] The person calling this function is the buyer
+  Change the state of the item to received. 
+  Remember to call the event associated with this function!*/
   function receiveItem(uint sku)
-    public
-  {}
+    public shipped(sku) verifyCaller(items[sku].buyer) {
+      items[sku].state = State.Received;
+      
+      //EMIT: State changed for item as received
+      emit LogReceived(sku);
+    }
+
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* We have these functions completed so we can run tests, just ignore it :) */
-  /*
+  //Uncomment to run tests successfully
   function fetchItem(uint _sku) public view returns (string memory name, uint sku, uint price, uint state, address seller, address buyer) {
     name = items[_sku].name;
     sku = items[_sku].sku;
@@ -203,6 +211,6 @@ contract SupplyChain {
     seller = items[_sku].seller;
     buyer = items[_sku].buyer;
     return (name, sku, price, state, seller, buyer);
-  } */
+  }
 
 }
