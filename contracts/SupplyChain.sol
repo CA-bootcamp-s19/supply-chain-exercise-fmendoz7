@@ -17,7 +17,7 @@ contract SupplyChain {
   /* [X] set owner */
   address indexed public owner;
 
-  /* [X]Add a variable called skuCount to track the most recent sku # */
+  /* [X] Add a variable called skuCount to track THE MOST RECENT sku # */
   uint public skuCount;
 
   /* [X] Add a line that creates a public mapping that maps the SKU (a number) to an Item.
@@ -60,14 +60,32 @@ contract SupplyChain {
   }
 
   /* Create 4 events with the same name as each possible State (see above)
-    Prefix each event with "Log" for clarity, so the forSale event will be called "LogForSale"
-    Each event should accept one argument, the sku */
+    [X] Prefix each event with "Log" for clarity, so the forSale event will be called "LogForSale"
+    [X] Each event should accept ONE argument, the sku */
 
-/* Create a modifer that checks if the msg.sender is the owner of the contract */
+    //States can be found with the enum
+    event LogForSale(uint sku);
+    event LogSold(uint sku);
+    event LogShipped(uint sku);
+    event LogReceived(uint sku);
 
-  modifier verifyCaller (address _address) { require (msg.sender == _address); _;}
+/* [X] Create a modifer that checks if the msg.sender is the owner of the contract */
+//Provided the function satisfies the conditions, modifier can MODIFY the behavior of the function
+  modifier isOwner() {
+    require(msg.sender == owner);
+    _;
+  }
 
-  modifier paidEnough(uint _price) { require(msg.value >= _price); _;}
+  modifier verifyCaller (address _address) { 
+    require (msg.sender == _address); 
+    _;
+  }
+
+  modifier paidEnough(uint _price) { 
+    require(msg.value >= _price); 
+    _;
+  }
+
   modifier checkValue(uint _sku) {
     //refund them after pay for item (why it is before, _ checks for logic before func)
     _;
