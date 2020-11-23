@@ -23,6 +23,8 @@ contract SupplyChain {
   /* [X] Add a line that creates a public mapping that maps the SKU (a number) to an Item.
      Call this mappings items
   */
+
+  //Access an item through their sku number
   mapping (uint => Item) public items;
 
   /* [X] Add a line that creates an ENUM called State. This should have 4 states
@@ -34,6 +36,7 @@ contract SupplyChain {
   */
 
   //This merely initializes it
+  //This enum lists the potential state of a product
   enum State {
     ForSale,
     Sold,
@@ -94,7 +97,7 @@ contract SupplyChain {
     items[_sku].buyer.transfer(amountToRefund);
   }
 
-  /* For each of the following modifiers, use what you learned about modifiers
+  /* [X] For each of the following modifiers, use what you learned about modifiers
    to give them functionality. For example, the forSale modifier should require
    that the item with the given sku has the state ForSale. 
    Note that the uninitialized Item.State is 0, which is also the index of the ForSale value,
@@ -105,10 +108,27 @@ contract SupplyChain {
    */
   
   
-  /// modifier forSale
-  /// modifier sold
-  /// modifier shipped
-  /// modifier received
+  modifier forSale(uint sku) {
+    //(!!!)
+    require(items[sku].state == State.ForSale);
+    require(items[sku].seller != address(0));
+    _;
+  }
+
+  modifier sold(uint sku) {
+    require(items[sku].state == State.Sold);
+    _;
+  }
+
+  modifier shipped(uint sku) {
+    require(items[sku].state == State.Shipped);
+    _;
+  }
+
+  modifier received(uint sku) {
+    require(items[sku].state == State.Received);
+    _;
+  }
 
 
   constructor() public {
