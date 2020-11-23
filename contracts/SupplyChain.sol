@@ -46,8 +46,8 @@ contract SupplyChain {
     Received
   }
 
-  //Create an instance of the State enum
-  State state;
+  //Per warnings from Solidity compiler, commented out to prevent shadowed declaration warning
+  //State state;
 /*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* [X] Create a struct named Item.
