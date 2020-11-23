@@ -25,7 +25,7 @@ contract SupplyChain {
   */
   mapping (uint => Item) public items;
 
-  /* [X] Add a line that creates an enum called State. This should have 4 states
+  /* [X] Add a line that creates an ENUM called State. This should have 4 states
     [X] ForSale
     [X] Sold
     [X] Shipped
@@ -44,12 +44,20 @@ contract SupplyChain {
   //Create an instance of the State enum
   State state;
 
-  /* Create a struct named Item.
-    Here, add a name, sku, price, state, seller, and buyer
+  /* [X] Create a struct named Item.
+    [X] Here, add a name, sku, price, state, seller, and buyer
     We've left you to figure out what the appropriate types are,
     if you need help you can ask around :)
     Be sure to add "payable" to addresses that will be handling value transfer
   */
+  struct Item {
+    string name;
+    uint sku;
+    uint price;
+    State state;
+    address indexed payable seller;
+    address indexed payable buyer;
+  }
 
   /* Create 4 events with the same name as each possible State (see above)
     Prefix each event with "Log" for clarity, so the forSale event will be called "LogForSale"
