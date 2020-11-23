@@ -61,8 +61,8 @@ contract SupplyChain {
     uint sku;
     uint price;
     State state;
-    address indexed payable seller;
-    address indexed payable buyer;
+    address payable seller;
+    address payable buyer;
   }
 /*------------------------------------------------------------------------------------------------------------------------------------------*/
 
