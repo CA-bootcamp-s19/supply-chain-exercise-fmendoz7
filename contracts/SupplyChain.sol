@@ -23,6 +23,7 @@ contract SupplyChain {
   /* [X] Add a line that creates a public mapping that maps the SKU (a number) to an Item.
      Call this mappings items
   */
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   //Access an item through their sku number
   mapping (uint => Item) public items;
@@ -34,6 +35,7 @@ contract SupplyChain {
     [X] Received
     (declaring them in this order is important for testing)
   */
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   //This merely initializes it
   //This enum lists the potential state of a product
@@ -46,6 +48,7 @@ contract SupplyChain {
 
   //Create an instance of the State enum
   State state;
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* [X] Create a struct named Item.
     [X] Here, add a name, sku, price, state, seller, and buyer
@@ -61,6 +64,7 @@ contract SupplyChain {
     address indexed payable seller;
     address indexed payable buyer;
   }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* Create 4 events with the same name as each possible State (see above)
     [X] Prefix each event with "Log" for clarity, so the forSale event will be called "LogForSale"
@@ -71,6 +75,7 @@ contract SupplyChain {
     event LogSold(uint sku);
     event LogShipped(uint sku);
     event LogReceived(uint sku);
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /* [X] Create a modifer that checks if the msg.sender is the owner of the contract */
 //Provided the function satisfies the conditions, modifier can MODIFY the behavior of the function
@@ -96,6 +101,7 @@ contract SupplyChain {
     uint amountToRefund = msg.value - _price;
     items[_sku].buyer.transfer(amountToRefund);
   }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   /* [X] For each of the following modifiers, use what you learned about modifiers
    to give them functionality. For example, the forSale modifier should require
@@ -130,11 +136,14 @@ contract SupplyChain {
     _;
   }
 
-
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
   constructor() public {
-    /* Here, set the owner as the person who instantiated the contract
+    /* [X] Here, set the owner as the person who instantiated the contract
        and set your skuCount to 0. */
+      owner = msg.sender;
+      skuCount = 0;
   }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 
   function addItem(string memory _name, uint _price) public returns(bool){
     emit LogForSale(skuCount);
